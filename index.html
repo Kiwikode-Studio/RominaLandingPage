@@ -1,452 +1,803 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anaís Reyes - Desarrolladora Creativa & Diseñadora UX</title>
+    <title>Romina Gamarra - Portafolio Profesional</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Remixicon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Paleta de colores Femenina y Elegante */
+        /* Estilos personalizados y de fuentes */
         :root {
-            --bg-primary: #FFF8F5; /* Un blanco rosado muy suave */
-            --bg-secondary: #FDF2E9; /* Crema suave */
-            --text-primary: #4B3F3A; /* Marrón oscuro para texto */
-            --text-secondary: #8C7D76; /* Marrón más claro para subtítulos */
-            --accent-primary: #E5A4CB; /* Rosa pastel */
-            --accent-secondary: #D4AF37; /* Toque de dorado/mostaza */
-            --border-color: rgba(75, 63, 58, 0.1);
+            --font-poppins: 'Poppins', sans-serif;
+            --font-inter: 'Inter', sans-serif;
+            --font-pacifico: 'Pacifico', cursive;
+            --color-accent: #FF4BC1; /* Magenta Suave */
         }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: var(--font-inter);
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
         }
+        .font-poppins { font-family: var(--font-poppins); }
+        .font-pacifico { font-family: var(--font-pacifico); }
+        .font-black { font-weight: 900; }
+        .font-extrabold { font-weight: 800; }
 
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
+        /* Ocultar cursor por defecto */
+        * { cursor: none; }
+        
+        /* Estilos para el cursor personalizado */
+        .custom-cursor-dot, .custom-cursor-outline {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease-out;
+        }
+        .custom-cursor-dot {
+            top: 0; left: 0; width: 16px; height: 16px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .custom-cursor-outline {
+            top: 0; left: 0; width: 32px; height: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
         
-        /* Animación de entrada */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-up.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+        /* Pantalla de carga */
+        #loading-screen {
+            position: fixed; inset: 0; z-index: 10000;
+            background-color: #000; display: flex;
+            align-items: center; justify-content: center;
+            transition: opacity 0.8s ease-in-out;
         }
         
-        /* Estilos de botones */
-        .btn-primary {
-            background-color: var(--accent-primary);
-            color: white;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 15px rgba(229, 164, 203, 0.4);
+        /* Animación de texto genérica */
+        .animated-text > span {
+            display: inline-block; overflow: hidden;
+            vertical-align: bottom;
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(229, 164, 203, 0.6);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
-            transition: all 0.3s ease-in-out;
-        }
-        .btn-secondary:hover {
-            background-color: var(--accent-primary);
-            color: white;
+        .animated-text > span > span {
+            display: inline-block; transform: translateY(100%);
         }
 
-        /* Estilos de la navegación */
-        .nav-link {
-            position: relative;
-            color: var(--text-secondary);
-            transition: color 0.3s;
+        /* Estilos para el switcher de idioma */
+        .lang-switch .active {
+            color: var(--color-accent);
+            font-weight: 800;
         }
-        .nav-link:hover {
-            color: var(--text-primary);
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--accent-primary);
-            transition: width 0.3s;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Estilos de las tarjetas */
-        .card {
-            background-color: white;
-            border-radius: 1rem;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(140, 125, 118, 0.1);
-        }
-        
-        /* Estilos del carrusel de proyectos */
-        .project-card .carousel-info {
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-        }
-        .project-card:hover .carousel-info {
-            opacity: 1;
-        }
-
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header / Nav -->
-    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center">
-                    <a href="#" class="font-bold text-2xl" style="font-family: 'Playfair Display', serif;">Anaís Reyes</a>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="nav-link">Sobre Mí</a>
-                    <a href="#projects" class="nav-link">Proyectos</a>
-                    <a href="#contact" class="nav-link">Contacto</a>
-                </div>
-                <div class="hidden md:block">
-                     <a href="#contact" class="btn-secondary font-medium py-2 px-5 rounded-full text-sm">
-                         ¡Hablemos!
-                     </a>
-                </div>
+    <!-- Pantalla de carga -->
+    <div id="loading-screen">
+        <div class="text-center">
+            <div class="font-poppins text-6xl text-white mb-8">RG</div>
+            <div class="w-64 h-1 bg-gray-800 rounded-full overflow-hidden mx-auto">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-pink-500 to-purple-600 rounded-full" style="width: 0%;"></div>
             </div>
+            <p id="loading-text" class="text-white/60 mt-4 text-sm tracking-widest uppercase">Cargando Soluciones Inteligentes</p>
         </div>
-    </nav>
+    </div>
 
-    <!-- Sección Hero -->
-    <header class="min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1596048033222-38f3a353d7ce?q=80&w=2070&auto=format&fit=crop');">
-        <div class="absolute inset-0 bg-[--bg-primary] opacity-70"></div>
-        <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="lg:w-2/3">
-                <div class="fade-in-up text-center lg:text-left">
-                    <p class="text-lg text-[--accent-primary] font-semibold mb-2">Hola, soy Anaís Reyes</p>
-                    <h1 class="text-5xl md:text-7xl font-bold text-[--text-primary] mb-4">
-                        Diseñando experiencias digitales con pasión y código.
-                    </h1>
-                    <p class="text-lg md:text-xl text-[--text-secondary] max-w-2xl mx-auto lg:mx-0 mb-8">
-                        Soy una desarrolladora creativa y diseñadora UX/UI, enfocada en construir productos digitales hermosos, intuitivos y funcionales que conecten con las personas.
-                    </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <a href="#contact" class="w-full sm:w-auto btn-primary font-semibold py-3 px-8 rounded-full">
-                            Contáctame
-                        </a>
-                        <a href="#projects" class="w-full sm:w-auto btn-secondary font-semibold py-3 px-8 rounded-full">
-                            Ver este trabajo
-                        </a>
-                    </div>
-                </div>
+    <!-- Header Fijo -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+            <a href="#" class="font-pacifico text-3xl cursor-pointer text-white">Romina G.</a>
+            <div class="hidden md:flex items-center space-x-8 font-semibold">
+                <a id="nav-about" href="#about" class="text-white hover:text-[var(--color-accent)] transition-all cursor-pointer relative group">SOBRE MÍ<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--color-accent)] transition-all group-hover:w-full"></span></a>
+                <a id="nav-services" href="#services" class="text-white hover:text-[var(--color-accent)] transition-all cursor-pointer relative group">SERVICIOS<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--color-accent)] transition-all group-hover:w-full"></span></a>
+                <a id="nav-projects" href="#portfolio" class="text-white hover:text-[var(--color-accent)] transition-all cursor-pointer relative group">PROYECTOS<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--color-accent)] transition-all group-hover:w-full"></span></a>
+                <a id="nav-contact" href="#contact" class="text-white hover:text-[var(--color-accent)] transition-all cursor-pointer relative group">CONTACTO<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--color-accent)] transition-all group-hover:w-full"></span></a>
             </div>
-        </div>
+            <div class="flex items-center gap-4">
+                <div class="lang-switch hidden md:flex items-center gap-2 text-white font-semibold">
+                    <a href="#" id="lang-es" class="cursor-pointer transition-colors duration-300 active">ES</a>
+                    <span>/</span>
+                    <a href="#" id="lang-en" class="cursor-pointer transition-colors duration-300">EN</a>
+                </div>
+                <a id="nav-cta" href="#contact" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-2 rounded-full hover:shadow-2xl transition-all whitespace-nowrap cursor-pointer font-bold">HABLEMOS</a>
+            </div>
+        </nav>
     </header>
 
-    <!-- Contenido Principal -->
-    <main>
-        
-        <!-- Sección Sobre Mí -->
-        <section id="about" class="py-24 bg-white">
-            <div class="max-w-6xl mx-auto px-4">
-                <div class="text-center mb-16 fade-in-up">
-                    <h2 class="text-4xl text-[--text-primary] font-bold">Sobre Mí</h2>
-                    <p class="text-lg text-[--text-secondary] mt-2">Mi filosofía y las herramientas que utilizo para crear.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
-                    <!-- Imagen Personal -->
-                    <div class="md:col-span-2 fade-in-up">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop" alt="Retrato de Anaís Reyes" class="rounded-2xl w-full h-auto object-cover shadow-xl">
+    <!-- Cursores personalizados -->
+    <div id="cursor-dot" class="custom-cursor-dot"></div>
+    <div id="cursor-outline" class="custom-cursor-outline"></div>
+
+    <div id="smooth-scroll-content">
+        <div class="min-h-screen bg-black text-white overflow-hidden">
+            <!-- Sección Hero -->
+            <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+                <!-- VIDEO DE FONDO -->
+                <video autoplay loop muted playsinline class="absolute z-0 w-full h-full object-cover">
+                    <!-- CAMBIA 'tu-video.mp4' POR EL NOMBRE DE TU ARCHIVO DE VIDEO -->
+                    <source src="video1.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                </video>
+                
+                <div class="absolute inset-0 bg-black/70"></div>
+                <div class="absolute inset-0 bg-no-repeat bg-center" style="background-image: radial-gradient(circle at center, rgba(255, 75, 193, 0.15) 0%, rgba(0, 0, 0, 0) 60%);"></div>
+                
+                <div class="relative z-20 px-4 w-full">
+                    <h1 id="hero-title" class="font-poppins font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wider uppercase text-white opacity-0">
+                        Ideas Digitales, Resultados Reales.
+                    </h1>
+                    <div class="mt-8 mb-12 max-w-3xl mx-auto font-regular text-lg md:text-xl lg:text-2xl h-8 flex justify-center items-center">
+                        <p id="hero-rotating-subtitle" class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 font-medium"></p>
                     </div>
-                    <!-- Texto y Habilidades -->
-                    <div class="md:col-span-3 fade-in-up">
-                        <h3 class="text-3xl font-bold text-[--text-primary] mb-4">Mi Pasión por la Creación Digital</h3>
-                        <p class="text-[--text-secondary] mb-6">
-                            Desde que escribí mi primera línea de código, me enamoré de la capacidad de transformar ideas en realidades tangibles. Mi enfoque combina un diseño centrado en el usuario con un desarrollo frontend limpio y eficiente, buscando siempre el equilibrio perfecto entre estética y funcionalidad.
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a id="hero-cta-1" href="#portfolio" class="bg-transparent border-2 border-[var(--color-accent)] text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-[var(--color-accent)] hover:text-black transition-all whitespace-nowrap cursor-pointer">
+                            Ver mi Trabajo
+                        </a>
+                        <a id="hero-cta-2" href="#contact" class="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold text-lg border border-white/30 hover:bg-white/20 transition-all whitespace-nowrap cursor-pointer">
+                            Contáctame
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Sobre Mí -->
+            <section id="about" class="py-24 bg-gradient-to-br from-gray-900 to-black">
+                <div class="max-w-6xl mx-auto px-4">
+                    <div class="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <div id="about-name" class="animated-text font-poppins text-5xl md:text-6xl font-black text-white mb-2 leading-tight" data-text="Romina G."></div>
+                            <p id="about-role" class="text-xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-8">
+                                Ingeniera Industrial
+                            </p>
+                            <p id="about-desc" class="text-lg text-gray-300 mb-8 leading-relaxed">
+                                Impulso la eficiencia a través de la automatización y el análisis de datos. Mi enfoque se centra en crear soluciones inteligentes que simplifican procesos y generan impacto real en los resultados.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                                <a id="about-cta-1" href="#portfolio" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-2xl transition-all whitespace-nowrap cursor-pointer text-center">
+                                    VER MI TRABAJO
+                                </a>
+                                <a id="about-cta-2" href="#contact" class="bg-white/10 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold border border-white/30 hover:bg-white/20 transition-all whitespace-nowrap cursor-pointer text-center">
+                                    CONTACTA CONMIGO
+                                </a>
+                            </div>
+                        </div>
+                        <div class="relative flex justify-center md:justify-start">
+                            <div class="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-purple-500/50 p-1">
+                                <div class="w-full h-full rounded-full overflow-hidden">
+                                    <img src="./ROMI1.jpeg" alt="Foto de perfil de Romina Gamarra" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Servicios -->
+            <section id="services" class="py-20 bg-black">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <div id="services-title" class="animated-text font-poppins text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 mb-6" data-text="MIS SERVICIOS"></div>
+                        <h3 id="services-subtitle" class="font-poppins text-2xl font-semibold text-white mb-4">Servicios</h3>
+                        <p id="services-desc" class="text-xl text-gray-400 max-w-2xl mx-auto">
+                            Ofrezco soluciones integrales que combinan análisis de datos, automatización, desarrollo web y visualización para potenciar tu negocio.
                         </p>
-                        <div class="space-y-4">
-                            <div class="card p-4 flex items-center gap-4">
-                                <div class="w-12 h-12 flex-shrink-0 bg-[--bg-secondary] rounded-full flex items-center justify-center text-[--accent-primary]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Card 1: Interactive Dashboards -->
+                        <div class="group cursor-pointer">
+                            <div class="bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl border border-gray-800 hover:border-purple-500/50 transition-all duration-500 h-full">
+                                <div class="w-16 h-16 flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mb-6 transition-transform duration-500 group-hover:rotate-[360deg] group-hover:scale-125">
+                                    <i class="ri-dashboard-3-line text-2xl text-white"></i>
                                 </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg">Diseño UX/UI</h4>
-                                    <p class="text-sm text-[--text-secondary]">Creando interfaces intuitivas y atractivas.</p>
-                                </div>
+                                <h3 id="service-1-title" class="font-poppins text-xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-purple-400 transition-all">
+                                    Interactive Dashboards
+                                </h3>
+                                <p id="service-1-desc" class="text-gray-400 leading-relaxed mb-6">
+                                    Turn complex data into clear, impactful visual stories with customized Power BI and web dashboards.
+                                </p>
+                                <ul class="space-y-3 text-gray-400">
+                                    <li id="service-1-item-1" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Real-time Data Visualization</span></li>
+                                    <li id="service-1-item-2" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Custom KPI Tracking</span></li>
+                                    <li id="service-1-item-3" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Automated Reporting</span></li>
+                                    <li id="service-1-item-4" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Insightful User Interfaces</span></li>
+                                </ul>
                             </div>
-                            <div class="card p-4 flex items-center gap-4">
-                                <div class="w-12 h-12 flex-shrink-0 bg-[--bg-secondary] rounded-full flex items-center justify-center text-[--accent-primary]">
-                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        </div>
+                        <!-- Card 2: Process Automation -->
+                        <div class="group cursor-pointer">
+                            <div class="bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl border border-gray-800 hover:border-purple-500/50 transition-all duration-500 h-full">
+                                <div class="w-16 h-16 flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mb-6 transition-transform duration-500 group-hover:rotate-[360deg] group-hover:scale-125">
+                                    <i class="ri-robot-2-line text-2xl text-white"></i>
                                 </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg">Desarrollo Frontend</h4>
-                                    <p class="text-sm text-[--text-secondary]">Transformando diseños en código con React y Tailwind.</p>
-                                </div>
+                                <h3 id="service-2-title" class="font-poppins text-xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-purple-400 transition-all">
+                                    Process Automation
+                                </h3>
+                                <p id="service-2-desc" class="text-gray-400 leading-relaxed mb-6">
+                                    Boost efficiency and reduce manual effort through smart automation tailored to your operations.
+                                </p>
+                                <ul class="space-y-3 text-gray-400">
+                                    <li id="service-2-item-1" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Workflow Optimization</span></li>
+                                    <li id="service-2-item-2" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Task Automation</span></li>
+                                    <li id="service-2-item-3" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>System Integration</span></li>
+                                    <li id="service-2-item-4" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Performance Monitoring</span></li>
+                                </ul>
                             </div>
-                             <div class="card p-4 flex items-center gap-4">
-                                <div class="w-12 h-12 flex-shrink-0 bg-[--bg-secondary] rounded-full flex items-center justify-center text-[--accent-primary]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                        </div>
+                        <!-- Card 3: Web Development -->
+                        <div class="group cursor-pointer">
+                            <div class="bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl border border-gray-800 hover:border-purple-500/50 transition-all duration-500 h-full">
+                                <div class="w-16 h-16 flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mb-6 transition-transform duration-500 group-hover:rotate-[360deg] group-hover:scale-125">
+                                    <i class="ri-code-s-slash-line text-2xl text-white"></i>
                                 </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg">Estrategia de Producto</h4>
-                                    <p class="text-sm text-[--text-secondary]">Definiendo el camino para soluciones exitosas.</p>
+                                <h3 id="service-3-title" class="font-poppins text-xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-purple-400 transition-all">
+                                    Web Development
+                                </h3>
+                                <p id="service-3-desc" class="text-gray-400 leading-relaxed mb-6">
+                                    Craft responsive and modern web solutions using React, Next.js, and Tailwind CSS, focused on usability and speed.
+                                </p>
+                                <ul class="space-y-3 text-gray-400">
+                                    <li id="service-3-item-1" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Custom Web Applications</span></li>
+                                    <li id="service-3-item-2" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Mobile-Responsive Design</span></li>
+                                    <li id="service-3-item-3" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Performance Optimization</span></li>
+                                    <li id="service-3-item-4" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>SEO Best Practices</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Card 4: Data Analysis -->
+                        <div class="group cursor-pointer">
+                            <div class="bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl border border-gray-800 hover:border-purple-500/50 transition-all duration-500 h-full">
+                                <div class="w-16 h-16 flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mb-6 transition-transform duration-500 group-hover:rotate-[360deg] group-hover:scale-125">
+                                    <i class="ri-line-chart-line text-2xl text-white"></i>
                                 </div>
+                                <h3 id="service-4-title" class="font-poppins text-xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-pink-400 group-hover:to-purple-400 transition-all">
+                                    Data Analysis
+                                </h3>
+                                <p id="service-4-desc" class="text-gray-400 leading-relaxed mb-6">
+                                    Uncover trends and drive smarter decisions with advanced analytics and data-driven strategies.
+                                </p>
+                                <ul class="space-y-3 text-gray-400">
+                                    <li id="service-4-item-1" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Predictive Analytics</span></li>
+                                    <li id="service-4-item-2" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Statistical Modeling</span></li>
+                                    <li id="service-4-item-3" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Data Cleaning & Transformation</span></li>
+                                    <li id="service-4-item-4" class="flex items-center"><i class="ri-check-line text-[var(--color-accent)] mr-2"></i><span>Business Intelligence Reporting</span></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Sección Proyectos -->
-        <section id="projects" class="py-24 bg-[--bg-secondary]">
-            <div class="max-w-6xl mx-auto px-4 fade-in-up">
-                <h2 class="text-4xl text-[--text-primary] font-bold text-center mb-12">Mis Proyectos Destacados</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Proyecto 1 -->
-                    <div id="project-1" class="project-card group relative rounded-2xl overflow-hidden card h-96"></div>
-                    <!-- Proyecto 2 -->
-                    <div id="project-2" class="project-card group relative rounded-2xl overflow-hidden card h-96"></div>
-                    <!-- Proyecto 3 -->
-                    <div id="project-3" class="project-card group relative rounded-2xl overflow-hidden card h-96 md:col-span-2 lg:col-span-1"></div>
-                     <!-- Proyecto 4 -->
-                    <div id="project-4" class="project-card group relative rounded-2xl overflow-hidden card h-96 lg:col-span-2"></div>
-                     <!-- Proyecto 5 -->
-                    <div id="project-5" class="project-card group relative rounded-2xl overflow-hidden card h-96"></div>
+            <!-- Sección Portafolio (MODIFIED) -->
+            <section id="portfolio" class="py-20 bg-gradient-to-br from-gray-900 to-black">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <div id="portfolio-title" class="animated-text font-poppins text-4xl md:text-5xl font-black text-white mb-6" data-text="PROYECTOS DESTACADOS"></div>
+                        <p id="portfolio-desc" class="text-xl text-gray-400 max-w-2xl mx-auto">
+                            Una selección de proyectos donde la ingeniería y la creatividad se encuentran.
+                        </p>
+                    </div>
+                    
+                    <!-- New Balanced Asymmetrical Grid Layout -->
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-8">
+                        <!-- Project 1 -->
+                        <div class="group cursor-pointer md:col-span-3">
+                             <div class="relative overflow-hidden rounded-2xl bg-gray-800 aspect-video border border-gray-700 hover:border-pink-500/50 transition-all duration-500">
+                                <!-- Carousel Images -->
+                                <img src="./HOTEL.png" alt="Hotel Website 1" class="carousel-image w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 1;">
+                                <img src="./HOTEL 1.png" alt="Hotel Website 2" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                                <img src="./HOTEL 2.png" alt="Hotel Website 3" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                                <img src="./HOTEL 3.png" alt="Hotel Website 4" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div>
+                                        <h3 id="project-1-title" class="font-poppins text-xl font-bold mb-1">Hotel Website</h3>
+                                        <p id="project-1-cat" class="text-sm text-pink-300 font-semibold">Desarrollo Web</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project 2 -->
+                        <div class="group cursor-pointer md:col-span-3">
+                             <div class="relative overflow-hidden rounded-2xl bg-gray-800 aspect-video border border-gray-700 hover:border-pink-500/50 transition-all duration-500">
+                                <!-- Carousel Images -->
+                                <img src="./Landing 1.png" alt="Web Corporativa 1" class="carousel-image w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 1;">
+                                <img src="./Landing 2.png" alt="Web Corporativa 2" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                                <img src="./LANDING 3.png" alt="Web Corporativa 3" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div>
+                                        <h3 id="project-2-title" class="font-poppins text-xl font-bold mb-1">Web Corporativa</h3>
+                                        <p id="project-2-cat" class="text-sm text-pink-300 font-semibold">Desarrollo Web</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project 3 -->
+                        <div class="group cursor-pointer md:col-span-3">
+                             <div class="relative overflow-hidden rounded-2xl bg-gray-800 aspect-video border border-gray-700 hover:border-pink-500/50 transition-all duration-500">
+                                <!-- Carousel Images -->
+                                <img src="RMA STATUS.png" alt="Web App 1" class="carousel-image w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 1;">
+                                <img src="RMA 3.png" alt="Web App 2" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                                <img src="RMA 4.png" alt="Web App 3" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div>
+                                        <h3 id="project-3-title" class="font-poppins text-xl font-bold mb-1">Web Corporativo</h3>
+                                        <p id="project-3-cat" class="text-sm text-pink-300 font-semibold">Desarrollo Web</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Project 4 -->
+                         <div class="group cursor-pointer md:col-span-3">
+                             <div class="relative overflow-hidden rounded-2xl bg-gray-800 aspect-video border border-gray-700 hover:border-pink-500/50 transition-all duration-500">
+                                <!-- Carousel Images -->
+                                <img src="./LATAM 1.png" alt="Dashboard 1" class="carousel-image w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 1;">
+                                <img src="./LATAM 2.png" alt="Dashboard 2" class="carousel-image absolute inset-0 w-full h-full object-cover object-center transition-all duration-500 group-hover:scale-110" style="opacity: 0;">
+                               
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div>
+                                        <h3 id="project-4-title" class="font-poppins text-xl font-bold mb-1">Dashboard</h3>
+                                        <p id="project-4-cat" class="text-sm text-pink-300 font-semibold">Desarrollo de Dashboard</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Sección Contacto / CTA Final -->
-        <section id="contact" class="py-24 bg-white">
-            <div class="max-w-4xl mx-auto px-4 fade-in-up">
-                <div class="text-center">
-                    <h2 class="text-4xl font-bold text-[--text-primary] mb-4">¿Tienes un proyecto en mente? <br> ¡Me encantaría escucharlo!</h2>
-                    <p class="text-[--text-secondary] mb-8 max-w-2xl mx-auto">
-                        Si buscas una colaboradora para tu próximo proyecto o simplemente quieres conectar, no dudes en escribirme.
+            <!-- Sección Conectemos -->
+            <section id="socials" class="py-20 bg-black">
+                <div class="max-w-4xl mx-auto px-4 text-center">
+                    <h2 id="socials-title" class="animated-text font-poppins text-4xl md:text-5xl font-black text-white mb-6" data-text="CONECTEMOS"></h2>
+                    <p id="socials-desc" class="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
+                        Me encantaría saber más sobre tus proyectos y desafíos. Sígueme en mis redes o envíame un mensaje directo.
                     </p>
+                    <div class="flex justify-center space-x-6">
+                        <a href="#" class="w-16 h-16 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 transition-all cursor-pointer group">
+                            <i class="ri-linkedin-fill text-3xl text-white group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="w-16 h-16 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 transition-all cursor-pointer group">
+                            <i class="ri-github-fill text-3xl text-white group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="w-16 h-16 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 transition-all cursor-pointer group">
+                            <i class="ri-dribbble-line text-3xl text-white group-hover:scale-110 transition-transform"></i>
+                        </a>
+                    </div>
                 </div>
-                <form action="#" method="POST" class="mt-10 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
-                    <div>
-                        <label for="first-name" class="block text-sm font-medium text-[--text-secondary]">Nombre</label>
-                        <div class="mt-1">
-                            <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-transparent rounded-md focus:ring-[--accent-primary] focus:border-[--accent-primary]">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="last-name" class="block text-sm font-medium text-[--text-secondary]">Apellido</label>
-                        <div class="mt-1">
-                            <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-transparent rounded-md focus:ring-[--accent-primary] focus:border-[--accent-primary]">
-                        </div>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="email" class="block text-sm font-medium text-[--text-secondary]">Email</label>
-                        <div class="mt-1">
-                            <input id="email" name="email" type="email" autocomplete="email" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-transparent rounded-md focus:ring-[--accent-primary] focus:border-[--accent-primary]">
-                        </div>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="message" class="block text-sm font-medium text-[--text-secondary]">Mensaje</label>
-                        <div class="mt-1">
-                            <textarea id="message" name="message" rows="4" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-transparent rounded-md focus:ring-[--accent-primary] focus:border-[--accent-primary]"></textarea>
-                        </div>
-                    </div>
-                    <div class="sm:col-span-2 text-center">
-                        <button type="submit" class="w-full sm:w-auto btn-primary font-semibold py-3 px-8 rounded-full">
-                            Enviar Mensaje
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </main>
+            </section>
 
-    <!-- Footer -->
-    <footer class="bg-[--bg-secondary] text-[--text-secondary]">
-        <div class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="text-center md:text-left mb-4 md:mb-0">
-                     <p class="text-sm">&copy; 2025 Anaís Reyes. Creado con ❤️ en Lima, Perú.</p>
+            <!-- Sección Contacto -->
+            <section id="contact" class="py-20 bg-gradient-to-br from-purple-900/20 via-black to-black">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <div id="contact-title" class="animated-text font-poppins text-4xl md:text-5xl font-black text-white mb-6" data-text="¿TIENES UN PROYECTO?"></div>
+                        <p id="contact-desc" class="text-xl text-gray-300 max-w-2xl mx-auto">
+                            Estoy aquí para ayudarte a transformar tus ideas en soluciones eficientes. Cuéntame qué tienes en mente.
+                        </p>
+                    </div>
+                    
+                    <form id="contact-form" class="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/30">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="relative group">
+                                <input id="form-name" type="text" name="name" placeholder="Tu Nombre" class="w-full p-4 bg-white/5 border-2 border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none transition-all text-lg text-white placeholder-gray-400 hover:border-purple-400" required>
+                            </div>
+                            <div class="relative group">
+                                <input id="form-email" type="email" name="email" placeholder="Tu Email" class="w-full p-4 bg-white/5 border-2 border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none transition-all text-lg text-white placeholder-gray-400 hover:border-purple-400" required>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <textarea id="form-message" name="message" placeholder="Cuéntame sobre tu idea o el desafío que quieres resolver..." rows="6" maxlength="500" class="w-full p-4 bg-white/5 border-2 border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none transition-all text-lg resize-none text-white placeholder-gray-400 hover:border-purple-400" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button id="form-submit" type="submit" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all whitespace-nowrap cursor-pointer">
+                                ENVIAR MENSAJE
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-[--text-primary]">
-                        <span class="sr-only">Twitter</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
-                    </a>
-                    <a href="#" class="hover:text-[--text-primary]">
-                        <span class="sr-only">GitHub</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
-                    </a>
-                    <a href="#" class="hover:text-[--text-primary]">
-                        <span class="sr-only">LinkedIn</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
-                    </a>
+            </section>
+
+            <!-- Footer -->
+            <footer class="py-12 bg-black border-t border-gray-800">
+                <div class="max-w-6xl mx-auto px-4 text-center text-gray-400">
+                    <div class="font-poppins text-2xl mb-4 text-white inline-block font-bold">RG</div>
+                    <p id="footer-desc" class="mb-4">Ingeniería, datos y diseño para soluciones eficientes.</p>
+                    <p id="footer-copy">&copy; 2024 Romina Gamarra. Todos los derechos reservados.</p>
                 </div>
-            </div>
+            </footer>
         </div>
-    </footer>
+    </div>
 
+    <!-- GSAP (para animaciones) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Lenis (para smooth scroll) -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <script>
-        // Script para animación al hacer scroll
-        const sections = document.querySelectorAll('.fade-in-up');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-        sections.forEach(section => {
-            observer.observe(section);
-        });
+        document.addEventListener('DOMContentLoaded', function() {
 
-        // --- Lógica del carrusel de proyectos ---
-        const projectsData = [
-            { 
-                id: 'project-1', 
-                title: 'App de Bienestar "Serena"', 
-                description: 'Diseño y prototipado de una app de meditación.',
-                subtitle: 'UX/UI Design',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-primary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>',
-                images: ['https://images.unsplash.com/photo-1576402182903-6bce9e4c4bf4?q=80&w=1974&auto=format&fit=crop', 'https://images.unsplash.com/photo-1600724369321-de530a61b728?q=80&w=1974&auto=format&fit=crop'] 
-            },
-            { 
-                id: 'project-2', 
-                title: 'E-commerce de Joyería "Aura"',
-                description: 'Plataforma de venta online con React.',
-                subtitle: 'Frontend Development',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-primary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>',
-                images: ['https://images.unsplash.com/photo-1611652033959-8a3d486562b6?q=80&w=1969&auto=format&fit=crop', 'https://images.unsplash.com/photo-1599351378622-d8a15a7a9259?q=80&w=1974&auto=format&fit=crop'] 
-            },
-            { 
-                id: 'project-3', 
-                title: 'Branding para "Bloom Cafe"',
-                description: 'Identidad visual para una cafetería local.',
-                subtitle: 'Branding & Design',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-primary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>',
-                images: ['https://images.unsplash.com/photo-1559305469-497fe342a9ae?q=80&w=1974&auto=format&fit=crop', 'https://images.unsplash.com/photo-1511920183353-3c9c943ce1d1?q=80&w=1974&auto=format&fit=crop'] 
-            },
-            { 
-                id: 'project-4', 
-                title: 'Landing Page para "Artisan"',
-                description: 'Página de captura para un marketplace de artesanías.',
-                subtitle: 'Web Design',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-primary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>',
-                images: ['https://images.unsplash.com/photo-1549492423-4002122c37fb?q=80&w=2070&auto=format&fit=crop', 'https://images.unsplash.com/photo-1525373698388-3d2a58553ebc?q=80&w=2070&auto=format&fit=crop'] 
-            },
-            { 
-                id: 'project-5', 
-                title: 'Blog de Viajes "Wanderlust"',
-                description: 'Diseño de blog personal con enfoque en fotografía.',
-                subtitle: 'Web Design & Development',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-primary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>',
-                images: ['https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?q=80&w=2070&auto=format&fit=crop', 'https://images.unsplash.com/photo-1527632911563-ee5b6d5344b6?q=80&w=1974&auto=format&fit=crop'] 
+            // --- SISTEMA DE TRADUCCIÓN ---
+            const translations = {
+                'loading-text': {
+                    es: 'Cargando Soluciones Inteligentes',
+                    en: 'Loading Intelligent Solutions'
+                },
+                'nav-about': {
+                    es: 'SOBRE MÍ',
+                    en: 'ABOUT ME'
+                },
+                'nav-services': {
+                    es: 'SERVICIOS',
+                    en: 'SERVICES'
+                },
+                'nav-projects': {
+                    es: 'PROYECTOS',
+                    en: 'PROJECTS'
+                },
+                'nav-contact': {
+                    es: 'CONTACTO',
+                    en: 'CONTACT'
+                },
+                'nav-cta': {
+                    es: 'HABLEMOS',
+                    en: 'LET\'S TALK'
+                },
+                'hero-title': {
+                    es: 'Ideas Digitales, Resultados Reales.',
+                    en: 'Digital Ideas, Real Results.'
+                },
+                'hero-cta-1': {
+                    es: 'Ver mi Trabajo',
+                    en: 'See my Work'
+                },
+                'hero-cta-2': {
+                    es: 'Contáctame',
+                    en: 'Contact Me'
+                },
+                'about-name': {
+                    es: 'Romina G.',
+                    en: 'Romina G.'
+                },
+                'about-role': {
+                    es: 'Ingeniera Industrial',
+                    en: 'Industrial Engineer'
+                },
+                'about-desc': {
+                    es: 'Impulso la eficiencia a través de la automatización y el análisis de datos. Mi enfoque se centra en crear soluciones inteligentes que simplifican procesos y generan impacto real en los resultados.',
+                    en: 'I drive efficiency through automation and data analysis. My focus is on creating smart solutions that simplify processes and generate real impact on results.'
+                },
+                'about-cta-1': {
+                    es: 'VER MI TRABAJO',
+                    en: 'SEE MY WORK'
+                },
+                'about-cta-2': {
+                    es: 'CONTACTA CONMIGO',
+                    en: 'CONTACT ME'
+                },
+                'services-title': {
+                    es: 'MIS SERVICIOS',
+                    en: 'MY SERVICES'
+                },
+                'services-subtitle': {
+                    es: 'Servicios',
+                    en: 'Services'
+                },
+                'services-desc': {
+                    es: 'Ofrezco soluciones integrales que combinan análisis de datos, automatización, desarrollo web y visualización para potenciar tu negocio.',
+                    en: 'I offer comprehensive solutions that combine data analysis, automation, web development, and visualization to boost your business.'
+                },
+                'portfolio-title': {
+                    es: 'PROYECTOS DESTACADOS',
+                    en: 'FEATURED PROJECTS'
+                },
+                'portfolio-desc': {
+                    es: 'Una selección de proyectos donde la ingeniería y la creatividad se encuentran.',
+                    en: 'A selection of projects where engineering and creativity meet.'
+                },
+                'socials-title': {
+                    es: 'CONECTEMOS',
+                    en: 'LET\'S CONNECT'
+                },
+                'socials-desc': {
+                    es: 'Me encantaría saber más sobre tus proyectos y desafíos. Sígueme en mis redes o envíame un mensaje directo.',
+                    en: 'I would love to hear more about your projects and challenges. Follow me on my networks or send me a direct message.'
+                },
+                'contact-title': {
+                    es: '¿TIENES UN PROYECTO?',
+                    en: 'HAVE A PROJECT?'
+                },
+                'contact-desc': {
+                    es: 'Estoy aquí para ayudarte a transformar tus ideas en soluciones eficientes. Cuéntame qué tienes en mente.',
+                    en: 'I am here to help you transform your ideas into efficient solutions. Tell me what you have in mind.'
+                },
+                'form-name': {
+                    es: 'Tu Nombre',
+                    en: 'Your Name'
+                },
+                'form-email': {
+                    es: 'Tu Email',
+                    en: 'Your Email'
+                },
+                'form-message': {
+                    es: 'Cuéntame sobre tu idea o el desafío que quieres resolver...',
+                    en: 'Tell me about your idea or the challenge you want to solve...'
+                },
+                'form-submit': {
+                    es: 'ENVIAR MENSAJE',
+                    en: 'SEND MESSAGE'
+                },
+                'footer-desc': {
+                    es: 'Ingeniería, datos y diseño para soluciones eficientes.',
+                    en: 'Engineering, data, and design for efficient solutions.'
+                },
+                'footer-copy': {
+                    es: '&copy; 2024 Romina Gamarra. Todos los derechos reservados.',
+                    en: '&copy; 2024 Romina Gamarra. All rights reserved.'
+                }
+            };
+
+            const rotatingSubtitles = {
+                es: [
+                    "Convierte procesos manuales en soluciones digitales.",
+                    "Transforma datos en decisiones visuales.",
+                    "Une tecnología, análisis y diseño.",
+                    "Optimiza, automatiza y crea con propósito."
+                ],
+                en: [
+                    "Turning manual processes into digital solutions.",
+                    "Transforming data into visual decisions.",
+                    "Uniting technology, analysis, and design.",
+                    "Optimize, automate, and create with purpose."
+                ]
+            };
+
+            let currentLang = 'es';
+            let rotatingSubtitleIndex = 0;
+            const rotatingSubtitleElement = document.getElementById('hero-rotating-subtitle');
+            let scrollTriggers = []; // Array para mantener las instancias de ScrollTrigger
+
+            // Función para reconstruir la estructura HTML para la animación de texto
+            function rebuildAnimatedText(element) {
+                const text = element.dataset.text;
+                if (!text) return;
+                const words = text.split(' ');
+                element.innerHTML = words
+                    .map(word => `<span class="inline-block overflow-hidden"><span class="inline-block translate-y-full">${word}&nbsp;</span></span>`)
+                    .join('');
             }
-        ];
 
-        const projectStates = {};
+            // Función para configurar los triggers de animación de texto
+            function setupAnimatedTextTriggers() {
+                // 1. Elimina y limpia los triggers anteriores para evitar duplicados
+                scrollTriggers.forEach(st => st.kill());
+                scrollTriggers = [];
 
-        projectsData.forEach(project => {
-            const container = document.getElementById(project.id);
-            projectStates[project.id] = { currentIndex: 0, intervalId: null };
-            
-            // Crear imágenes
-            project.images.forEach((src, index) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = project.title;
-                img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
-                container.appendChild(img);
-            });
-
-            // Crear overlay de información
-            const overlay = document.createElement('div');
-            overlay.className = 'carousel-info absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex flex-col items-start justify-end text-left p-6';
-            overlay.innerHTML = `
-                <div class="w-12 h-12 mb-3 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">${project.icon}</div>
-                <h3 class="text-white font-bold text-xl" style="font-family: 'Playfair Display', serif;">${project.title}</h3>
-                <p class="text-white/90 text-sm">${project.description}</p>
-            `;
-            container.appendChild(overlay);
-
-             // Crear puntos de navegación
-            const dotsContainer = document.createElement('div');
-            dotsContainer.className = 'absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity';
-            project.images.forEach((_, index) => {
-                const dot = document.createElement('span');
-                dot.className = `w-2 h-2 rounded-full cursor-pointer transition-all ${index === 0 ? 'bg-white' : 'bg-white/50'}`;
-                dot.onclick = (e) => {
-                    e.stopPropagation(); 
-                    goToSlide(project.id, index);
+                const animateTextInView = (element) => {
+                    if (!element) return;
+                    const spans = element.querySelectorAll('span > span');
+                    gsap.to(spans, {
+                        y: '0%', duration: 0.8, ease: 'power2.out', stagger: 0.1,
+                    });
                 };
-                dotsContainer.appendChild(dot);
-            });
-            container.appendChild(dotsContainer);
 
-            // Iniciar carrusel automático al hacer hover
-            container.addEventListener('mouseenter', () => {
-                if (project.images.length > 1) {
-                    projectStates[project.id].intervalId = setInterval(() => {
-                        nextSlide(project.id);
-                    }, 3000);
+                // 2. Itera sobre cada elemento, reconstruye su HTML y crea un nuevo trigger
+                document.querySelectorAll('.animated-text').forEach(textElement => {
+                    rebuildAnimatedText(textElement);
+                    const st = ScrollTrigger.create({
+                        trigger: textElement,
+                        start: "top 85%",
+                        onEnter: () => animateTextInView(textElement),
+                        once: true
+                    });
+                    scrollTriggers.push(st); // Guarda la nueva instancia
+                });
+            }
+
+            // Función para cambiar el idioma
+            function setLanguage(lang) {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+
+                document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+                document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+                // Actualiza todo el texto estático y los placeholders
+                for (const key in translations) {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        const newText = translations[key][lang];
+                        if (element.classList.contains('animated-text')) {
+                            element.dataset.text = newText; // Solo actualiza el atributo de datos
+                        } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.placeholder = newText;
+                        } else {
+                            element.innerHTML = newText;
+                        }
+                    }
                 }
+                
+                // Reinicia el carrusel de subtítulos
+                rotatingSubtitleIndex = 0;
+                if (rotatingSubtitleElement) {
+                    rotatingSubtitleElement.innerText = rotatingSubtitles[currentLang][rotatingSubtitleIndex];
+                }
+
+                // Llama a la función para reconstruir y reactivar las animaciones de texto
+                setupAnimatedTextTriggers();
+            }
+
+            document.getElementById('lang-es').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentLang !== 'es') setLanguage('es');
             });
 
-            // Detener carrusel al quitar el hover
-            container.addEventListener('mouseleave', () => {
-                clearInterval(projectStates[project.id].intervalId);
+            document.getElementById('lang-en').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentLang !== 'en') setLanguage('en');
             });
+
+            // --- PANTALLA DE CARGA ---
+            const loadingScreen = document.getElementById('loading-screen');
+            const progressBar = document.getElementById('progress-bar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    progressBar.style.width = '100%';
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            initPageAnimations();
+                        }, 800);
+                    }, 500);
+                }
+                progressBar.style.width = progress + '%';
+            }, 100);
+
+            // --- CURSOR PERSONALIZADO ---
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorOutline = document.getElementById('cursor-outline');
+            window.addEventListener('mousemove', e => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                gsap.to(cursorDot, { duration: 0.2, x: posX, y: posY });
+                gsap.to(cursorOutline, { duration: 0.3, x: posX, y: posY });
+            });
+
+            document.querySelectorAll('a, button, .cursor-pointer').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(cursorDot, { duration: 0.3, scale: 2.5 });
+                    gsap.to(cursorOutline, { duration: 0.3, scale: 1.5 });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(cursorDot, { duration: 0.3, scale: 1 });
+                    gsap.to(cursorOutline, { duration: 0.3, scale: 1 });
+                });
+            });
+
+            // --- SMOOTH SCROLL (LENIS) ---
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // --- ANIMACIONES CON GSAP ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            function initPageAnimations() {
+                // --- Header con fondo al hacer scroll ---
+                const header = document.getElementById('main-header');
+                ScrollTrigger.create({
+                    start: 'top -80',
+                    end: 99999,
+                    toggleClass: { className: 'scrolled', targets: header }
+                });
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    #main-header.scrolled {
+                        background-color: rgba(0, 0, 0, 0.7);
+                        backdrop-filter: blur(10px);
+                    }
+                `;
+                document.head.appendChild(style);
+
+                // --- ANIMACIÓN HERO ---
+                gsap.fromTo("#hero-title", 
+                    { scale: 0.9, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
+                );
+
+                // --- Subtítulo rotativo en Hero ---
+                if (rotatingSubtitleElement) {
+                    function changeSubtitle() {
+                        gsap.to(rotatingSubtitleElement, {
+                            opacity: 0,
+                            y: -10,
+                            duration: 0.4,
+                            ease: 'power2.in',
+                            onComplete: () => {
+                                rotatingSubtitleIndex = (rotatingSubtitleIndex + 1) % rotatingSubtitles[currentLang].length;
+                                rotatingSubtitleElement.innerText = rotatingSubtitles[currentLang][rotatingSubtitleIndex];
+                                gsap.fromTo(rotatingSubtitleElement,
+                                    { opacity: 0, y: 10 },
+                                    { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+                                );
+                            }
+                        });
+                    }
+                    
+                    rotatingSubtitleElement.innerText = rotatingSubtitles[currentLang][rotatingSubtitleIndex];
+                    gsap.fromTo(rotatingSubtitleElement,
+                        { opacity: 0, y: 10 },
+                        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.8 }
+                    );
+
+                    setInterval(changeSubtitle, 5000); // Cambia cada 5 segundos
+                }
+
+                // Configuración inicial de las animaciones de texto
+                setupAnimatedTextTriggers();
+
+                // --- PORTFOLIO CAROUSEL ON HOVER ---
+                const portfolioItems = document.querySelectorAll('#portfolio .group');
+
+                portfolioItems.forEach(item => {
+                    const images = item.querySelectorAll('.carousel-image');
+                    if (images.length <= 1) return; 
+
+                    let carouselInterval;
+                    let currentIndex = 0;
+
+                    item.addEventListener('mouseenter', () => {
+                        clearInterval(carouselInterval);
+
+                        carouselInterval = setInterval(() => {
+                            images[currentIndex].style.opacity = '0';
+                            currentIndex = (currentIndex + 1) % images.length;
+                            images[currentIndex].style.opacity = '1';
+                        }, 1000); 
+                    });
+
+                    item.addEventListener('mouseleave', () => {
+                        clearInterval(carouselInterval);
+                        setTimeout(() => {
+                            images.forEach((img, index) => {
+                                img.style.opacity = (index === 0) ? '1' : '0';
+                            });
+                            currentIndex = 0;
+                        }, 100);
+                    });
+                });
+            }
+            
+            // Establece el idioma inicial al cargar la página
+            setLanguage('es');
         });
-
-        function updateCarouselView(projectId) {
-            const state = projectStates[projectId];
-            const container = document.getElementById(projectId);
-            const images = container.querySelectorAll('img');
-            const dots = container.querySelectorAll('.absolute.bottom-4 span');
-
-            images.forEach((img, index) => {
-                img.classList.toggle('opacity-100', index === state.currentIndex);
-                img.classList.toggle('opacity-0', index !== state.currentIndex);
-            });
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('bg-white', index === state.currentIndex);
-                dot.classList.toggle('bg-white/50', index !== state.currentIndex);
-            });
-        }
-
-        function nextSlide(projectId) {
-            const state = projectStates[projectId];
-            const project = projectsData.find(p => p.id === projectId);
-            state.currentIndex = (state.currentIndex + 1) % project.images.length;
-            updateCarouselView(projectId);
-        }
-
-        function goToSlide(projectId, slideIndex) {
-            projectStates[projectId].currentIndex = slideIndex;
-            updateCarouselView(projectId);
-        }
-
     </script>
 </body>
 </html>
